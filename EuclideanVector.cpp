@@ -4,18 +4,12 @@
 namespace evec {
     class EuclideanVector {
         public:
-            // A constructor that takes the number of dimensions (as an unsigned int) but no magnitudes,
-            // sets the magnitude in each dimension as 0.0.
-            // Hint: you may want to make this a delegating constructor to the next constructor below. 
+            // takes the number of dimensions (as an unsigned int) but no
+            // magnitudes, sets the magnitude in each dimension as 0.0.
             // This is the default constructor, with the default value being 1. 
-            EuclideanVector(unsigned int dims) {
+            EuclideanVector(unsigned int dims = 1): EuclideanVector(dims, 0) {}
 
-            }
-
-            EuclideanVector(unsigned int dims, double mag): vals(dims, mag) {
-                
-            }
-
+            EuclideanVector(unsigned int dims, double mag): vals(dims, mag) {}
 
             unsigned int getNumDimensions() {
                 return vals.size(); // what type is this? any concerns about type casting?
