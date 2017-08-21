@@ -11,6 +11,9 @@ namespace evec {
 
             EuclideanVector(unsigned int dims, double mag): vals(dims, mag) {}
 
+            // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
+            EuclideanVector(std::initializer_list<double> mags): vals{mags} {}
+
             unsigned int getNumDimensions() {
                 return vals.size(); // what type is this? any concerns about type casting?
             }
