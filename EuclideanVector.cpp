@@ -21,7 +21,12 @@ namespace evec {
     // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
     EuclideanVector::EuclideanVector(std::initializer_list<double> mags): vals{mags} {}
 
-    // EuclideanVector::EuclideanVector(EuclideanVector original);
+    // copy constructor
+    EuclideanVector::EuclideanVector(EuclideanVector &original) {
+        for (const double val : original.vals) {
+            vals.push_back(val);
+        }
+    }
 
     unsigned int EuclideanVector::getNumDimensions() {
         // size_t is unsigned

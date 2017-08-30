@@ -12,6 +12,7 @@ namespace evec {
             EuclideanVector(unsigned int dims);
             EuclideanVector(unsigned int dims, double mag);
             EuclideanVector(std::initializer_list<double> mags);
+            // EuclideanVector(EuclideanVector &original);
 
             template<class iterator_type>
             EuclideanVector(iterator_type begin, iterator_type end);
@@ -21,6 +22,7 @@ namespace evec {
             double getEuclideanNorm();
             EuclideanVector createUnitVector();
 
+            EuclideanVector operator=(EuclideanVector e);
             double &operator[](unsigned int i);
             const double &operator[](unsigned int i) const;
             EuclideanVector operator+=(EuclideanVector e);
