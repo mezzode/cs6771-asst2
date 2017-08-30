@@ -28,6 +28,9 @@ namespace evec {
         }
     }
 
+    // move constructor
+    // EuclideanVector::EuclideanVector(EuclideanVector &original): vals(std::move(original.vals)), norm(std::move(original.norm)) {}
+
     unsigned int EuclideanVector::getNumDimensions() {
         // size_t is unsigned
         // any problem if just `return vals.size()`?

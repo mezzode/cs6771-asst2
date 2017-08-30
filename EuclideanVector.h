@@ -13,6 +13,7 @@ namespace evec {
             EuclideanVector(unsigned int dims, double mag);
             EuclideanVector(std::initializer_list<double> mags);
             EuclideanVector(const EuclideanVector &original);
+            // EuclideanVector(EuclideanVector &original);
 
             template<class iterator_type>
             EuclideanVector(iterator_type begin, iterator_type end);
