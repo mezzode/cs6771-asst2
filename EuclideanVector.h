@@ -14,6 +14,8 @@ namespace evec {
             EuclideanVector(std::initializer_list<double> mags);
             EuclideanVector(const EuclideanVector &original);
             // EuclideanVector(EuclideanVector &original);
+            EuclideanVector(const std::vector<double> &v);
+            EuclideanVector(const std::list<double> &v);
 
             template<class iterator_type>
             EuclideanVector(iterator_type begin, iterator_type end);
@@ -30,9 +32,6 @@ namespace evec {
             EuclideanVector operator-=(EuclideanVector e);
             EuclideanVector operator*=(double n);
             EuclideanVector operator/=(double n);
-
-            operator std::vector<double>();
-            operator std::list<double>();
 
             friend bool operator==(EuclideanVector e1, EuclideanVector e2);
             friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
