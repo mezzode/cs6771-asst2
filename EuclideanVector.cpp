@@ -22,7 +22,7 @@ namespace evec {
     EuclideanVector::EuclideanVector(std::initializer_list<double> mags): vals{mags} {}
 
     // copy constructor
-    EuclideanVector::EuclideanVector(EuclideanVector &original) {
+    EuclideanVector::EuclideanVector(const EuclideanVector &original) {
         for (const double val : original.vals) {
             vals.push_back(val);
         }
@@ -55,6 +55,14 @@ namespace evec {
         // TODO: returns nan if norm is 0; norm is zero if zero vector; allowed?
         const double norm = getEuclideanNorm();
         return *this / norm;
+    }
+
+    // copy assignment
+    EuclideanVector EuclideanVector::operator=(const EuclideanVector &e) {
+        // copy and swap
+        EuclideanVector tmp = e;
+        std::swap(tmp, *this);
+        return *this;
     }
 
     double &EuclideanVector::operator[](unsigned int i) {
