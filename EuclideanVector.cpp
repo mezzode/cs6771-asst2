@@ -52,6 +52,14 @@ namespace evec {
         return *this / norm;
     }
 
+    double &EuclideanVector::operator[](unsigned int i) {
+        return vals[i];
+    }
+
+    const double &EuclideanVector::operator[](unsigned int i) const {
+        return vals[i];
+    }
+
     EuclideanVector EuclideanVector::operator/=(const double n) {
         return *this / n; // needs to assign to itself tho
     }

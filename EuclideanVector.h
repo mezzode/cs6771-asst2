@@ -2,6 +2,7 @@
 #define EVEC_H
 
 #include <vector>
+#include <list>
 #include <cmath>
 #include <iostream>
 
@@ -20,18 +21,15 @@ namespace evec {
             double getEuclideanNorm();
             EuclideanVector createUnitVector();
 
-            double &operator[](unsigned int i) {
-                return vals[i];
-            }
-
-            const double &operator[](unsigned int i) const {
-                return vals[i];
-            }
-
+            double &operator[](unsigned int i);
+            const double &operator[](unsigned int i) const;
             EuclideanVector operator+=(EuclideanVector e);
             EuclideanVector operator-=(EuclideanVector e);
-            EuclideanVector operator*=(const double n);
-            EuclideanVector operator/=(const double n);
+            EuclideanVector operator*=(double n);
+            EuclideanVector operator/=(double n);
+
+            operator std::vector<double>();
+            operator std::list<double>();
 
             friend bool operator==(EuclideanVector e1, EuclideanVector e2);
             friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
