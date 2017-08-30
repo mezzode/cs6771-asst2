@@ -20,10 +20,6 @@ namespace evec {
             double getEuclideanNorm();
             EuclideanVector createUnitVector();
 
-            // EuclideanVector operator/=(const double n) {
-            //     // asdf
-            // }
-
             double &operator[](unsigned int i) {
                 return vals[i];
             }
@@ -32,6 +28,18 @@ namespace evec {
                 return vals[i];
             }
 
+            EuclideanVector operator+=(EuclideanVector e);
+            EuclideanVector operator-=(EuclideanVector e);
+            EuclideanVector operator*=(const double n);
+            EuclideanVector operator/=(const double n);
+
+            friend bool operator==(EuclideanVector e1, EuclideanVector e2);
+            friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
+            friend EuclideanVector operator+(EuclideanVector e1, EuclideanVector e2);
+            friend EuclideanVector operator-(EuclideanVector e1, EuclideanVector e2);
+            friend double operator*(EuclideanVector e1, EuclideanVector e2);
+            friend EuclideanVector operator*(EuclideanVector e, double n);
+            friend EuclideanVector operator*(double n, EuclideanVector e);
             friend EuclideanVector operator/(EuclideanVector e, const double n);
             friend std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
         private:

@@ -1,4 +1,5 @@
 #include "EuclideanVector.h"
+#include <stdexcept> // here or in header?
 
 namespace evec {
 
@@ -20,6 +21,7 @@ namespace evec {
     // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
     EuclideanVector::EuclideanVector(std::initializer_list<double> mags): vals{mags} {}
 
+    // EuclideanVector::EuclideanVector(EuclideanVector original);
 
     unsigned int EuclideanVector::getNumDimensions() {
         // size_t is unsigned
@@ -50,6 +52,73 @@ namespace evec {
         return *this / norm;
     }
 
+    EuclideanVector EuclideanVector::operator/=(const double n) {
+        return *this / n; // needs to assign to itself tho
+    }
+
+    bool operator==(EuclideanVector e1, EuclideanVector e2) {
+        if (e1.getNumDimensions() != e2.getNumDimensions()) {
+            return false;
+        }
+        for (unsigned int i = 0; i < e1.getNumDimensions(); i++) {
+            if (e1[i] != e2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    bool operator!=(EuclideanVector e1, EuclideanVector e2) {
+        return !(e1 == e2);
+    }
+
+    EuclideanVector operator+(EuclideanVector e1, EuclideanVector e2) {
+        if (e1.getNumDimensions() != e2.getNumDimensions()) {
+            throw std::invalid_argument("Dimensions do not match.");
+        }
+        const int ndims = e1.getNumDimensions();
+        EuclideanVector result(ndims);
+        for (int i = 0; i < ndims; i++) {
+            result[i] = e1[i] + e2[i];
+        }
+        return result;
+    }
+
+    EuclideanVector operator-(EuclideanVector e1, EuclideanVector e2) {
+        return e1 + (-1*e2);
+    }
+
+    double operator*(EuclideanVector e1, EuclideanVector e2) {
+        // dot product
+        if (e1.getNumDimensions() != e2.getNumDimensions()) {
+            throw std::invalid_argument("Dimensions do not match.");
+        }
+        const unsigned int ndims = e1.getNumDimensions();
+        double result(0);
+        for (unsigned int i = 0; i < ndims; i++) {
+            result += e1[i] * e2[i];
+        }
+        return result;
+    }
+
+    EuclideanVector operator*(EuclideanVector e, double n) {
+        // would copying then dividing be better?
+        std::vector<double> v;
+        for (const double val : e.vals) {
+            v.push_back(val * n);
+        }
+        evec::EuclideanVector result(v.begin(), v.end());
+        return result;
+    }
+
+    EuclideanVector operator*(double n, EuclideanVector e) {
+        return e * n;
+    }
+
+    EuclideanVector operator/(EuclideanVector e, const double n) {
+        return e * (1/n);
+    }
+
     std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e) {
         stream << "[";
         for (auto i = e.vals.begin(); i != e.vals.end(); i++) {
@@ -61,16 +130,6 @@ namespace evec {
         stream << "]";
         return stream;
     }
-
-    EuclideanVector operator/(EuclideanVector e, const double n) {
-        // would copying then dividing be better?
-        std::vector<double> v;
-        for (const double val : e.vals) {
-            v.push_back(val / n);
-        }
-        evec::EuclideanVector result(v.begin(), v.end());
-        return result;
-    }
 }
 
 
@@ -79,12 +138,12 @@ namespace evec {
 void test(evec::EuclideanVector e) {
     using std::cout;
     using std::endl;
+    cout << "---" << endl;
     cout << e << endl;
     cout << "Norm: " << e.getEuclideanNorm() << endl;
     cout << "Dims: " << e.getNumDimensions() << endl;
     cout << "Div 2: " << (e / 2) << endl;
     cout << "Unit Vector: " << e.createUnitVector() << endl;
-    cout << "---" << endl;
 }
 
 
@@ -103,6 +162,11 @@ int main(int argc, char* argv[]) {
 
     std::vector<double> v = {2, 2, 3};
     evec::EuclideanVector e(v.begin(), v.end());
+    test(e);
+    e[0] = 1;
+    test(e);
+    std::cout << e.get(0) << ' ' << e.get(2) << std::endl;
+    e /= 2;
     test(e);
 
     // correctly throws since cant convert from string to double
