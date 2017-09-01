@@ -18,6 +18,8 @@ namespace evec {
             template<class iterator_type>
             EuclideanVector(iterator_type begin, iterator_type end);
 
+            ~EuclideanVector();
+
             unsigned int getNumDimensions();
             double get(unsigned int i);
             double getEuclideanNorm();
@@ -34,6 +36,8 @@ namespace evec {
             EuclideanVector operator*=(double n);
             EuclideanVector operator/=(double n);
 
+            // dont friend things which dont access private vars
+            // should these also be declared separately in the header file?
             friend bool operator==(EuclideanVector e1, EuclideanVector e2);
             friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
             friend EuclideanVector operator+(EuclideanVector e1, EuclideanVector e2);
@@ -44,7 +48,9 @@ namespace evec {
             friend EuclideanVector operator/(EuclideanVector e, const double n);
             friend std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
         private:
-            std::vector<double> vals; // must use dynamically allocated memory, cant just be automatic...
+            // std::vector<double> vals; // must use dynamically allocated memory, cant just be automatic...
+            unsigned int dims_;
+            double *vals;
             mutable double norm = -1; // need to cache norm if possible
     };
 }

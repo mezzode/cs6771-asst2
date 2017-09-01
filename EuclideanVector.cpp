@@ -8,7 +8,13 @@ namespace evec {
     // This is the default constructor, with the default value being 1. 
     EuclideanVector::EuclideanVector(unsigned int dims = 1): EuclideanVector(dims, 0) {}
 
-    EuclideanVector::EuclideanVector(unsigned int dims, double mag): vals(dims, mag) {}
+    EuclideanVector::EuclideanVector(unsigned int dims, double mag) {
+        dims_ = dims;
+        vals = new double[dims_];
+        for (unsigned int i = 0; i < dims; ++i) {
+            vals[i] = mag;
+        }
+    }
 
     // A constructor (or constructors) that takes the start and end of an
     // iterator and works out the required dimensions, and sets the
@@ -19,7 +25,16 @@ namespace evec {
     EuclideanVector::EuclideanVector(iterator_type begin, iterator_type end): vals(begin, end) {}
 
     // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
-    EuclideanVector::EuclideanVector(std::initializer_list<double> mags): vals{mags} {}
+    EuclideanVector::EuclideanVector(std::initializer_list<double> mags) {
+        dims_ = mags.size;
+        vals = new double[dims_];
+        // vals = mags;
+        // is there a more elegant way to do this loop?
+        for (auto it = mags.begin(), unsigned int i = 0; it < mags.end(); ++it, ++i) {
+            vals[i] = *it;
+        }
+
+    }
 
     // copy constructor
     EuclideanVector::EuclideanVector(const EuclideanVector &original) {
@@ -31,11 +46,14 @@ namespace evec {
     // move constructor
     // EuclideanVector::EuclideanVector(EuclideanVector &original): vals(std::move(original.vals)), norm(std::move(original.norm)) {}
 
+    EuclideanVector::~EuclideanVector() {
+        // delete dims_;
+        delete vals;
+        // delete norm;
+    }
+
     unsigned int EuclideanVector::getNumDimensions() {
-        // size_t is unsigned
-        // any problem if just `return vals.size()`?
-        std::size_t n = vals.size();
-        return static_cast<unsigned int>(n);
+        return dims_;
     }
 
     double EuclideanVector::get(unsigned int i) {
@@ -46,8 +64,8 @@ namespace evec {
         if (norm < 0) {
             // calculate norm
             norm = 0;
-            for (double val : vals) {
-                norm += val * val;
+            for (unsigned int i = 0; i < dims_; ++i) {
+                norm += vals[i] * vals[i];
             }
             norm = std::sqrt(norm);
         }
@@ -126,12 +144,10 @@ namespace evec {
     }
 
     EuclideanVector operator*(EuclideanVector e, double n) {
-        // would copying then dividing be better?
-        std::vector<double> v;
-        for (const double val : e.vals) {
-            v.push_back(val * n);
+        evec::EuclideanVector result(e.dims_);
+        for (unsigned int i = 0; i < e.dims_; ++i) {
+            result[i] = e[i] * n;
         }
-        evec::EuclideanVector result(v.begin(), v.end());
         return result;
     }
 
@@ -144,14 +160,14 @@ namespace evec {
     }
 
     std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e) {
-        stream << "[";
-        for (auto i = e.vals.begin(); i != e.vals.end(); i++) {
-            stream << *i;
-            if (i != e.vals.end() - 1) {
-                stream << " ";
+        stream << '[';
+        for (unsigned int i = 0; i < e.dims_; ++i) {
+            stream << e[i];
+            if (i < (e.dims_ - 1)) {
+                stream << ' ';
             }
         }
-        stream << "]";
+        stream << ']';
         return stream;
     }
 }
