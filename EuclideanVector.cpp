@@ -4,6 +4,8 @@
 
 namespace evec {
 
+    // constructors
+
     // takes the number of dimensions (as an unsigned int) but no
     // magnitudes, sets the magnitude in each dimension as 0.0.
     // This is the default constructor, with the default value being 1. 
@@ -34,10 +36,28 @@ namespace evec {
         swap(*this, original);
     }
 
+    // destructor
+
     EuclideanVector::~EuclideanVector() {
-        // delete dims_;
         delete[] vals;
-        // delete norm;
+    }
+
+    // operations
+
+    // copy assignment
+    EuclideanVector& EuclideanVector::operator=(EuclideanVector& e) {
+        // copy and swap
+        EuclideanVector tmp = e; // tmp(e)?
+        swap(tmp, *this);
+        return *this;
+    }
+
+    // move assignment
+    EuclideanVector& EuclideanVector::operator=(EuclideanVector &&e) {
+        EuclideanVector tmp(0);
+        swap(e, *this);
+        swap(e, tmp);
+        return *this;
     }
 
     unsigned int EuclideanVector::getNumDimensions() const {
@@ -64,37 +84,6 @@ namespace evec {
         // TODO: returns nan if norm is 0; norm is zero if zero vector; allowed?
         const double norm = getEuclideanNorm();
         return *this / norm;
-    }
-
-    EuclideanVector::operator std::vector<double>() {
-
-        // for (unsigned int i = 0; i < dims_; ++i) {
-
-        // }
-        std::vector<double> result(vals, vals+dims_);
-        return result;
-    }
-
-    EuclideanVector::operator std::list<double>() {
-        std::list<double> result(vals, vals+dims_);
-        return result;
-    }
-
-    // copy assignment
-    EuclideanVector& EuclideanVector::operator=(EuclideanVector& e) {
-        // copy and swap
-        EuclideanVector tmp = e; // tmp(e)?
-        swap(tmp, *this);
-        return *this;
-    }
-
-    // move assignment
-    EuclideanVector& EuclideanVector::operator=(EuclideanVector &&e) {
-        // is this right?
-        EuclideanVector tmp(0);
-        swap(e, *this);
-        swap(e, tmp);
-        return *this;
     }
 
     double &EuclideanVector::operator[](unsigned int i) {
@@ -131,6 +120,18 @@ namespace evec {
         *this *= (1/n);
         return *this;
     }
+
+    EuclideanVector::operator std::vector<double>() {
+        std::vector<double> result(vals, vals+dims_);
+        return result;
+    }
+
+    EuclideanVector::operator std::list<double>() {
+        std::list<double> result(vals, vals+dims_);
+        return result;
+    }
+
+    // operators
 
     bool operator==(const EuclideanVector &e1, const EuclideanVector &e2) {
         if (e1.getNumDimensions() != e2.getNumDimensions()) {
