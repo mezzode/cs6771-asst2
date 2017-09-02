@@ -31,9 +31,8 @@ namespace evec {
     }
 
     // move constructor
-    EuclideanVector::EuclideanVector(EuclideanVector &&original): dims_{std::move(original.dims_)}, norm{std::move(original.norm)} {
-        vals = original.vals;
-        original.vals = nullptr;
+    EuclideanVector::EuclideanVector(EuclideanVector &&original): EuclideanVector(0) {
+        swap(*this, original);
     }
 
     EuclideanVector::~EuclideanVector() {
@@ -83,9 +82,19 @@ namespace evec {
     }
 
     // copy assignment
-    EuclideanVector EuclideanVector::operator=(EuclideanVector e) {
+    EuclideanVector& EuclideanVector::operator=(EuclideanVector& e) {
         // copy and swap
+        EuclideanVector tmp = e; // tmp(e)?
+        swap(tmp, *this);
+        return *this;
+    }
+
+    // move assignment
+    EuclideanVector& EuclideanVector::operator=(EuclideanVector &&e) {
+        // is this right?
+        EuclideanVector tmp(0);
         swap(e, *this);
+        swap(e, tmp);
         return *this;
     }
 

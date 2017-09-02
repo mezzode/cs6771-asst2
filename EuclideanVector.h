@@ -39,7 +39,7 @@ namespace evec {
             // operations
 
             // copy assignment
-            EuclideanVector operator=(EuclideanVector e);
+            EuclideanVector& operator=(EuclideanVector &e);
 
             // move assignment
             EuclideanVector& operator=(EuclideanVector &&e);
