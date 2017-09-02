@@ -41,11 +41,11 @@ namespace evec {
         // delete norm;
     }
 
-    unsigned int EuclideanVector::getNumDimensions() {
+    unsigned int EuclideanVector::getNumDimensions() const {
         return dims_;
     }
 
-    double EuclideanVector::get(unsigned int i) {
+    double EuclideanVector::get(unsigned int i) const {
         return vals[i];
     }
 
@@ -106,8 +106,31 @@ namespace evec {
         return vals[i];
     }
 
-    EuclideanVector EuclideanVector::operator/=(const double n) {
-        return *this / n; // needs to assign to itself tho
+    EuclideanVector& EuclideanVector::operator+=(const EuclideanVector &e) {
+        if (dims_ != e.dims_) {
+            throw std::invalid_argument("Dimensions do not match.");
+        }
+        for (int i = 0; i < dims_; ++i) {
+            vals[i] += e[i];
+        }
+        return *this;
+    }
+
+    EuclideanVector& EuclideanVector::operator-=(const EuclideanVector &e) {
+        *this += (e*-1);
+        return *this;
+    }
+
+    EuclideanVector& EuclideanVector::operator*=(const double &n) {
+        for (unsigned int i = 0; i < dims_; ++i) {
+            vals[i] *= n;
+        }
+        return *this;
+    }
+
+    EuclideanVector& EuclideanVector::operator/=(const double &n) {
+        *this *= (1/n);
+        return *this;
     }
 
     bool operator==(EuclideanVector e1, EuclideanVector e2) {
@@ -126,23 +149,17 @@ namespace evec {
         return !(e1 == e2);
     }
 
-    EuclideanVector operator+(EuclideanVector e1, EuclideanVector e2) {
-        if (e1.getNumDimensions() != e2.getNumDimensions()) {
-            throw std::invalid_argument("Dimensions do not match.");
-        }
-        const int ndims = e1.getNumDimensions();
-        EuclideanVector result(ndims);
-        for (int i = 0; i < ndims; i++) {
-            result[i] = e1[i] + e2[i];
-        }
+    EuclideanVector operator+(const EuclideanVector &e1, const EuclideanVector &e2) {
+        EuclideanVector result = e1;
+        result += e2;
         return result;
     }
 
-    EuclideanVector operator-(EuclideanVector e1, EuclideanVector e2) {
+    EuclideanVector operator-(const EuclideanVector &e1, const EuclideanVector &e2) {
         return e1 + (-1*e2);
     }
 
-    double operator*(EuclideanVector e1, EuclideanVector e2) {
+    double operator*(const EuclideanVector &e1, const EuclideanVector &e2) {
         // dot product
         if (e1.getNumDimensions() != e2.getNumDimensions()) {
             throw std::invalid_argument("Dimensions do not match.");
@@ -155,19 +172,17 @@ namespace evec {
         return result;
     }
 
-    EuclideanVector operator*(EuclideanVector e, double n) {
-        evec::EuclideanVector result(e.dims_);
-        for (unsigned int i = 0; i < e.dims_; ++i) {
-            result[i] = e[i] * n;
-        }
+    EuclideanVector operator*(const EuclideanVector &e, const double &n) {
+        EuclideanVector result = e;
+        result *= n;
         return result;
     }
 
-    EuclideanVector operator*(double n, EuclideanVector e) {
+    EuclideanVector operator*(const double &n, const EuclideanVector &e) {
         return e * n;
     }
 
-    EuclideanVector operator/(EuclideanVector e, const double n) {
+    EuclideanVector operator/(const EuclideanVector &e, const double &n) {
         return e * (1/n);
     }
 

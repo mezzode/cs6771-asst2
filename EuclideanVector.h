@@ -44,9 +44,9 @@ namespace evec {
             // move assignment
             EuclideanVector& operator=(EuclideanVector &&e);
 
-            unsigned int getNumDimensions();
+            unsigned int getNumDimensions() const;
 
-            double get(unsigned int i);
+            double get(unsigned int i) const;
 
             double getEuclideanNorm();
 
@@ -55,13 +55,13 @@ namespace evec {
             double &operator[](unsigned int i);
             const double &operator[](unsigned int i) const;
 
-            EuclideanVector operator+=(EuclideanVector e);
+            EuclideanVector& operator+=(const EuclideanVector &e);
 
-            EuclideanVector operator-=(EuclideanVector e);
+            EuclideanVector& operator-=(const EuclideanVector &e);
 
-            EuclideanVector operator*=(double n);
+            EuclideanVector& operator*=(const double &n);
 
-            EuclideanVector operator/=(double n);
+            EuclideanVector& operator/=(const double &n);
 
             operator std::vector<double>();
             operator std::list<double>();
@@ -70,12 +70,12 @@ namespace evec {
             // should these also be declared separately in the header file?
             friend bool operator==(EuclideanVector e1, EuclideanVector e2);
             friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
-            friend EuclideanVector operator+(EuclideanVector e1, EuclideanVector e2);
-            friend EuclideanVector operator-(EuclideanVector e1, EuclideanVector e2);
-            friend double operator*(EuclideanVector e1, EuclideanVector e2);
-            friend EuclideanVector operator*(EuclideanVector e, double n);
-            friend EuclideanVector operator*(double n, EuclideanVector e);
-            friend EuclideanVector operator/(EuclideanVector e, const double n);
+            friend EuclideanVector operator+(const EuclideanVector &e1, const EuclideanVector &e2);
+            friend EuclideanVector operator-(const EuclideanVector &e1, const EuclideanVector &e2);
+            friend double operator*(const EuclideanVector &e1, const EuclideanVector &e2);
+            friend EuclideanVector operator*(const EuclideanVector &e, const double &n);
+            friend EuclideanVector operator*(const double &n, const EuclideanVector &e);
+            friend EuclideanVector operator/(const EuclideanVector &e, const double &n);
             friend std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
         private:
             unsigned int dims_;
