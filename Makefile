@@ -10,3 +10,6 @@ EuclideanVector.o: EuclideanVector.cpp EuclideanVector.h
 
 clean:
 	rm *o EuclideanVectorTester
+
+win:
+	make -f Makefile.win
