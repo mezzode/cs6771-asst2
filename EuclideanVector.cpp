@@ -1,7 +1,5 @@
 #include "EuclideanVector.h"
-#include <stdexcept> // here or in header?
-#include <algorithm>
-#include <iterator>
+#include <stdexcept>
 #include <cmath>
 
 namespace evec {
