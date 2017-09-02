@@ -1,5 +1,7 @@
 #include "EuclideanVector.h"
 #include <stdexcept> // here or in header?
+#include <algorithm>
+#include <iterator>
 
 namespace evec {
 
@@ -11,7 +13,7 @@ namespace evec {
     EuclideanVector::EuclideanVector(unsigned int dims, double mag) {
         dims_ = dims;
         vals = new double[dims_];
-        for (unsigned int i = 0; i < dims; ++i) {
+        for (unsigned int i = 0; i < dims_; ++i) {
             vals[i] = mag;
         }
     }
@@ -30,7 +32,8 @@ namespace evec {
         vals = new double[dims_];
         // vals = mags;
         // is there a more elegant way to do this loop?
-        for (auto it = mags.begin(), unsigned int i = 0; it < mags.end(); ++it, ++i) {
+        unsigned int i = 0;
+        for (auto it = mags.begin(); it < mags.end(); ++it, ++i) {
             vals[i] = *it;
         }
 
@@ -38,8 +41,10 @@ namespace evec {
 
     // copy constructor
     EuclideanVector::EuclideanVector(const EuclideanVector &original) {
-        for (const double val : original.vals) {
-            vals.push_back(val);
+        dims_ = original.dims_;
+        vals = new double[dims_];
+        for (unsigned int i = 0; i < dims_; ++i) {
+            vals[i] = original[i];
         }
     }
 
@@ -48,7 +53,7 @@ namespace evec {
 
     EuclideanVector::~EuclideanVector() {
         // delete dims_;
-        delete vals;
+        delete[] vals;
         // delete norm;
     }
 
