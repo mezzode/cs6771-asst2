@@ -49,6 +49,9 @@ int main(int argc, char* argv[]) {
     e[0] = 1;
     test(e);
     std::cout << e.get(0) << ' ' << e.get(2) << std::endl;
+    test(e + e);
+    e = e + e;
+    test(e);
     e /= 2; // isnt working
     test(e);
 

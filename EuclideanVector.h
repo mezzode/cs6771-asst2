@@ -36,7 +36,7 @@ namespace evec {
             operator std::vector<double>();
             operator std::list<double>();
 
-            EuclideanVector operator=(const EuclideanVector &e);
+            EuclideanVector operator=(EuclideanVector e);
             double &operator[](unsigned int i);
             const double &operator[](unsigned int i) const;
             EuclideanVector operator+=(EuclideanVector e);
@@ -56,10 +56,11 @@ namespace evec {
             friend EuclideanVector operator/(EuclideanVector e, const double n);
             friend std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
         private:
-            // std::vector<double> vals; // must use dynamically allocated memory, cant just be automatic...
             unsigned int dims_;
             double *vals;
             mutable double norm = -1; // need to cache norm if possible
+
+            friend void swap(EuclideanVector& a, EuclideanVector& b);
     };
 }
 

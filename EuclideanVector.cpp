@@ -82,10 +82,9 @@ namespace evec {
     }
 
     // copy assignment
-    EuclideanVector EuclideanVector::operator=(const EuclideanVector &e) {
+    EuclideanVector EuclideanVector::operator=(EuclideanVector e) {
         // copy and swap
-        EuclideanVector tmp = e;
-        std::swap(tmp, *this);
+        swap(e, *this);
         return *this;
     }
 
@@ -172,5 +171,12 @@ namespace evec {
         }
         stream << ']';
         return stream;
+    }
+
+    void swap(EuclideanVector& a, EuclideanVector& b) {
+        using std::swap;
+        swap(a.dims_, b.dims_);
+        swap(a.vals, b.vals);
+        swap(a.norm, b.norm);
     }
 }
