@@ -110,7 +110,7 @@ namespace evec {
         if (dims_ != e.dims_) {
             throw std::invalid_argument("Dimensions do not match.");
         }
-        for (int i = 0; i < dims_; ++i) {
+        for (unsigned int i = 0; i < dims_; ++i) {
             vals[i] += e[i];
         }
         return *this;
@@ -133,7 +133,7 @@ namespace evec {
         return *this;
     }
 
-    bool operator==(EuclideanVector e1, EuclideanVector e2) {
+    bool operator==(const EuclideanVector &e1, const EuclideanVector &e2) {
         if (e1.getNumDimensions() != e2.getNumDimensions()) {
             return false;
         }
@@ -145,7 +145,7 @@ namespace evec {
         return true;
     }
 
-    bool operator!=(EuclideanVector e1, EuclideanVector e2) {
+    bool operator!=(const EuclideanVector &e1, const EuclideanVector &e2) {
         return !(e1 == e2);
     }
 
@@ -188,9 +188,9 @@ namespace evec {
 
     std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e) {
         stream << '[';
-        for (unsigned int i = 0; i < e.dims_; ++i) {
+        for (unsigned int i = 0; i < e.getNumDimensions(); ++i) {
             stream << e[i];
-            if (i < (e.dims_ - 1)) {
+            if (i < (e.getNumDimensions() - 1)) {
                 stream << ' ';
             }
         }

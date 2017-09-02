@@ -65,18 +65,6 @@ namespace evec {
 
             operator std::vector<double>();
             operator std::list<double>();
-
-            // dont friend things which dont access private vars
-            // should these also be declared separately in the header file?
-            friend bool operator==(EuclideanVector e1, EuclideanVector e2);
-            friend bool operator!=(EuclideanVector e1, EuclideanVector e2);
-            friend EuclideanVector operator+(const EuclideanVector &e1, const EuclideanVector &e2);
-            friend EuclideanVector operator-(const EuclideanVector &e1, const EuclideanVector &e2);
-            friend double operator*(const EuclideanVector &e1, const EuclideanVector &e2);
-            friend EuclideanVector operator*(const EuclideanVector &e, const double &n);
-            friend EuclideanVector operator*(const double &n, const EuclideanVector &e);
-            friend EuclideanVector operator/(const EuclideanVector &e, const double &n);
-            friend std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
         private:
             unsigned int dims_;
             double *vals;
@@ -84,6 +72,16 @@ namespace evec {
 
             friend void swap(EuclideanVector& a, EuclideanVector& b);
     };
+
+    bool operator==(const EuclideanVector &e1, const EuclideanVector &e2);
+    bool operator!=(const EuclideanVector &e1, const EuclideanVector &e2);
+    EuclideanVector operator+(const EuclideanVector &e1, const EuclideanVector &e2);
+    EuclideanVector operator-(const EuclideanVector &e1, const EuclideanVector &e2);
+    double operator*(const EuclideanVector &e1, const EuclideanVector &e2);
+    EuclideanVector operator*(const EuclideanVector &e, const double &n);
+    EuclideanVector operator*(const double &n, const EuclideanVector &e);
+    EuclideanVector operator/(const EuclideanVector &e, const double &n);
+    std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
 }
 
 #endif

@@ -52,7 +52,7 @@ int main(int argc, char* argv[]) {
     test(e + e);
     e = e + e;
     test(e);
-    e /= 2; // isnt working
+    e /= 4;
     test(e);
 
     // correctly throws since cant convert from string to double
