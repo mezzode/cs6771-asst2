@@ -21,7 +21,7 @@ namespace evec {
                 dims_ = std::distance(begin, end);
                 vals = new double[dims_];
                 unsigned int i = 0;
-                for (auto it = begin; it < end; ++it, ++i) {
+                for (auto it = begin; it != end; ++it, ++i) {
                     vals[i] = *it;
                 }
             }
