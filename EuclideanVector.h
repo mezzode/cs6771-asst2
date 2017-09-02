@@ -10,11 +10,11 @@
 namespace evec {
     class EuclideanVector {
         public:
+            // constructors
+
             EuclideanVector(unsigned int dims = 1);
+
             EuclideanVector(unsigned int dims, double mag);
-            EuclideanVector(std::initializer_list<double> mags);
-            EuclideanVector(const EuclideanVector &original);
-            EuclideanVector(EuclideanVector &&original);
 
             template<class iterator_type>
             EuclideanVector(iterator_type begin, iterator_type end) {
@@ -26,23 +26,45 @@ namespace evec {
                 }
             }
 
+            EuclideanVector(std::initializer_list<double> mags);
+
+            EuclideanVector(const EuclideanVector &original);
+
+            EuclideanVector(EuclideanVector &&original);
+
+            // destructor
+
             ~EuclideanVector();
 
+            // operations
+
+            // copy assignment
+            EuclideanVector operator=(EuclideanVector e);
+
+            // move assignment
+            EuclideanVector& operator=(EuclideanVector &&e);
+
             unsigned int getNumDimensions();
+
             double get(unsigned int i);
+
             double getEuclideanNorm();
+
             EuclideanVector createUnitVector();
+            
+            double &operator[](unsigned int i);
+            const double &operator[](unsigned int i) const;
+
+            EuclideanVector operator+=(EuclideanVector e);
+
+            EuclideanVector operator-=(EuclideanVector e);
+
+            EuclideanVector operator*=(double n);
+
+            EuclideanVector operator/=(double n);
 
             operator std::vector<double>();
             operator std::list<double>();
-
-            EuclideanVector operator=(EuclideanVector e);
-            double &operator[](unsigned int i);
-            const double &operator[](unsigned int i) const;
-            EuclideanVector operator+=(EuclideanVector e);
-            EuclideanVector operator-=(EuclideanVector e);
-            EuclideanVector operator*=(double n);
-            EuclideanVector operator/=(double n);
 
             // dont friend things which dont access private vars
             // should these also be declared separately in the header file?
