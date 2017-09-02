@@ -3,9 +3,7 @@
 
 #include <vector>
 #include <list>
-#include <cmath>
 #include <iostream>
-#include <iterator>
 
 namespace evec {
     class EuclideanVector {

@@ -2,6 +2,7 @@
 #include <stdexcept> // here or in header?
 #include <algorithm>
 #include <iterator>
+#include <cmath>
 
 namespace evec {
 
