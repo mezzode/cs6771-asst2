@@ -24,20 +24,17 @@ namespace evec {
     // The iterators will be from std::vector or std::list.
     // Hint: a function template may help. 
     template<class iterator_type>
-    EuclideanVector::EuclideanVector(iterator_type begin, iterator_type end): vals(begin, end) {}
-
-    // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
-    EuclideanVector::EuclideanVector(std::initializer_list<double> mags) {
-        dims_ = mags.size;
+    EuclideanVector::EuclideanVector(iterator_type begin, iterator_type end) {
+        dims_ = std::distance(begin, end);
         vals = new double[dims_];
-        // vals = mags;
-        // is there a more elegant way to do this loop?
         unsigned int i = 0;
-        for (auto it = mags.begin(); it < mags.end(); ++it, ++i) {
+        for (auto it = begin; it < end; ++it, ++i) {
             vals[i] = *it;
         }
-
     }
+
+    // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
+    EuclideanVector::EuclideanVector(std::initializer_list<double> mags): EuclideanVector(mags.begin(), mags.end()) {}
 
     // copy constructor
     EuclideanVector::EuclideanVector(const EuclideanVector &original) {
@@ -81,6 +78,20 @@ namespace evec {
         // TODO: returns nan if norm is 0; norm is zero if zero vector; allowed?
         const double norm = getEuclideanNorm();
         return *this / norm;
+    }
+
+    EuclideanVector::operator std::vector<double>() {
+
+        // for (unsigned int i = 0; i < dims_; ++i) {
+
+        // }
+        std::vector<double> result(vals, vals+dims_);
+        return result;
+    }
+
+    EuclideanVector::operator std::list<double>() {
+        std::list<double> result(vals, vals+dims_);
+        return result;
     }
 
     // copy assignment
@@ -180,6 +191,19 @@ namespace evec {
 
 // for testing, move to own file
 
+// print vector
+std::ostream& operator<<(std::ostream& stream, const std::vector<double>& v) {
+    stream << '<';
+    for (auto it = v.begin(); it < v.end(); ++it) {
+        stream << *it;
+        if (it < v.end() - 1) {
+            stream << ' ';
+        }
+    }
+    stream << '>';
+    return stream;
+}
+
 void test(evec::EuclideanVector e) {
     using std::cout;
     using std::endl;
@@ -191,9 +215,9 @@ void test(evec::EuclideanVector e) {
     cout << "Unit Vector: " << e.createUnitVector() << endl;
     std::vector<double> v;
     v = e;
-    cout << "Vector: " << e << endl;
+    cout << "Vector: " << v << endl;
+    cout << "---" << endl;
 }
-
 
 int main(int argc, char* argv[]) {
     evec::EuclideanVector v0;
@@ -209,12 +233,13 @@ int main(int argc, char* argv[]) {
     test(a);
 
     std::vector<double> v = {2, 2, 3};
+    std::cout << v << std::endl;
     evec::EuclideanVector e(v.begin(), v.end());
     test(e);
     e[0] = 1;
     test(e);
     std::cout << e.get(0) << ' ' << e.get(2) << std::endl;
-    e /= 2;
+    e /= 2; // isnt working
     test(e);
 
     // correctly throws since cant convert from string to double

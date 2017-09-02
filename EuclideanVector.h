@@ -25,7 +25,7 @@ namespace evec {
             double getEuclideanNorm();
             EuclideanVector createUnitVector();
 
-            operator std::vector<double>(); 
+            operator std::vector<double>();
             operator std::list<double>();
 
             EuclideanVector operator=(const EuclideanVector &e);
