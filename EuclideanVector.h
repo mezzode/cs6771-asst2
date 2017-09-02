@@ -5,18 +5,26 @@
 #include <list>
 #include <cmath>
 #include <iostream>
+#include <iterator>
 
 namespace evec {
     class EuclideanVector {
         public:
-            EuclideanVector(unsigned int dims);
+            EuclideanVector(unsigned int dims = 1);
             EuclideanVector(unsigned int dims, double mag);
             EuclideanVector(std::initializer_list<double> mags);
             EuclideanVector(const EuclideanVector &original);
             // EuclideanVector(EuclideanVector &original);
 
             template<class iterator_type>
-            EuclideanVector(iterator_type begin, iterator_type end);
+            EuclideanVector(iterator_type begin, iterator_type end) {
+                dims_ = std::distance(begin, end);
+                vals = new double[dims_];
+                unsigned int i = 0;
+                for (auto it = begin; it < end; ++it, ++i) {
+                    vals[i] = *it;
+                }
+            }
 
             ~EuclideanVector();
 

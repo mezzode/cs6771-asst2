@@ -8,28 +8,13 @@ namespace evec {
     // takes the number of dimensions (as an unsigned int) but no
     // magnitudes, sets the magnitude in each dimension as 0.0.
     // This is the default constructor, with the default value being 1. 
-    EuclideanVector::EuclideanVector(unsigned int dims = 1): EuclideanVector(dims, 0) {}
+    EuclideanVector::EuclideanVector(unsigned int dims): EuclideanVector(dims, 0) {}
 
     EuclideanVector::EuclideanVector(unsigned int dims, double mag) {
         dims_ = dims;
         vals = new double[dims_];
         for (unsigned int i = 0; i < dims_; ++i) {
             vals[i] = mag;
-        }
-    }
-
-    // A constructor (or constructors) that takes the start and end of an
-    // iterator and works out the required dimensions, and sets the
-    // magnitude in each dimension according to the iterated values.
-    // The iterators will be from std::vector or std::list.
-    // Hint: a function template may help. 
-    template<class iterator_type>
-    EuclideanVector::EuclideanVector(iterator_type begin, iterator_type end) {
-        dims_ = std::distance(begin, end);
-        vals = new double[dims_];
-        unsigned int i = 0;
-        for (auto it = begin; it < end; ++it, ++i) {
-            vals[i] = *it;
         }
     }
 
@@ -46,7 +31,9 @@ namespace evec {
     }
 
     // move constructor
-    // EuclideanVector::EuclideanVector(EuclideanVector &original): vals(std::move(original.vals)), norm(std::move(original.norm)) {}
+    // EuclideanVector::EuclideanVector(EuclideanVector &original): vals(std::move(original.vals)), norm(std::move(original.norm)) {
+    //     // TODO:
+    // }
 
     EuclideanVector::~EuclideanVector() {
         // delete dims_;
@@ -186,64 +173,4 @@ namespace evec {
         stream << ']';
         return stream;
     }
-}
-
-
-// for testing, move to own file
-
-// print vector
-std::ostream& operator<<(std::ostream& stream, const std::vector<double>& v) {
-    stream << '<';
-    for (auto it = v.begin(); it < v.end(); ++it) {
-        stream << *it;
-        if (it < v.end() - 1) {
-            stream << ' ';
-        }
-    }
-    stream << '>';
-    return stream;
-}
-
-void test(evec::EuclideanVector e) {
-    using std::cout;
-    using std::endl;
-    cout << "---" << endl;
-    cout << e << endl;
-    cout << "Norm: " << e.getEuclideanNorm() << endl;
-    cout << "Dims: " << e.getNumDimensions() << endl;
-    cout << "Div 2: " << (e / 2) << endl;
-    cout << "Unit Vector: " << e.createUnitVector() << endl;
-    std::vector<double> v;
-    v = e;
-    cout << "Vector: " << v << endl;
-    cout << "---" << endl;
-}
-
-int main(int argc, char* argv[]) {
-    evec::EuclideanVector v0;
-    test(v0);
-
-    evec::EuclideanVector v1(4);
-    test(v1);
-
-    evec::EuclideanVector v2(4, 1.5);
-    test(v2);
-
-    const evec::EuclideanVector a = {1, 1};
-    test(a);
-
-    std::vector<double> v = {2, 2, 3};
-    std::cout << v << std::endl;
-    evec::EuclideanVector e(v.begin(), v.end());
-    test(e);
-    e[0] = 1;
-    test(e);
-    std::cout << e.get(0) << ' ' << e.get(2) << std::endl;
-    e /= 2; // isnt working
-    test(e);
-
-    // correctly throws since cant convert from string to double
-    // std::vector<std::string> v1 = {"moo", "moo"};
-    // evec::EuclideanVector e1(v1.begin(), v1.end());
-    // std::cout << e1.getEuclideanNorm() << std::endl;
 }
