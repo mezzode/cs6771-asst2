@@ -31,9 +31,10 @@ namespace evec {
     }
 
     // move constructor
-    // EuclideanVector::EuclideanVector(EuclideanVector &original): vals(std::move(original.vals)), norm(std::move(original.norm)) {
-    //     // TODO:
-    // }
+    EuclideanVector::EuclideanVector(EuclideanVector &&original): dims_{std::move(original.dims_)}, norm{std::move(original.norm)} {
+        vals = original.vals;
+        original.vals = nullptr;
+    }
 
     EuclideanVector::~EuclideanVector() {
         // delete dims_;
