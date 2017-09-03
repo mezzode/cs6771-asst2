@@ -6,9 +6,6 @@ namespace evec {
 
     // constructors
 
-    // takes the number of dimensions (as an unsigned int) but no
-    // magnitudes, sets the magnitude in each dimension as 0.0.
-    // This is the default constructor, with the default value being 1. 
     EuclideanVector::EuclideanVector(unsigned int dims): EuclideanVector(dims, 0) {}
 
     EuclideanVector::EuclideanVector(unsigned int dims, double mag) {
@@ -19,7 +16,6 @@ namespace evec {
         }
     }
 
-    // initializer list constructor e.g. `EuclideanVector a {1,2,3,4};`
     EuclideanVector::EuclideanVector(std::initializer_list<double> mags): EuclideanVector(mags.begin(), mags.end()) {}
 
     // copy constructor
@@ -47,7 +43,7 @@ namespace evec {
     // copy assignment
     EuclideanVector& EuclideanVector::operator=(EuclideanVector& e) {
         // copy and swap
-        EuclideanVector tmp = e; // tmp(e)?
+        EuclideanVector tmp = e;
         swap(tmp, *this);
         return *this;
     }
@@ -84,7 +80,6 @@ namespace evec {
     }
 
     EuclideanVector EuclideanVector::createUnitVector() {
-        // TODO: returns nan if norm is 0; norm is zero if zero vector; allowed?
         const double norm = getEuclideanNorm();
         return *this / norm;
     }

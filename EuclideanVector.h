@@ -66,7 +66,7 @@ namespace evec {
         private:
             unsigned int dims_;
             double *vals;
-            mutable double norm = -1; // need to cache norm if possible
+            mutable double norm = -1;
 
             friend void swap(EuclideanVector& a, EuclideanVector& b);
     };
