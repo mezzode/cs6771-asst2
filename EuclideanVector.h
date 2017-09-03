@@ -14,8 +14,8 @@ namespace evec {
 
             EuclideanVector(unsigned int dims, double mag);
 
-            template<class iterator_type>
-            EuclideanVector(iterator_type begin, iterator_type end) {
+            template<typename Iterator, typename = decltype(*std::declval<Iterator&>(), ++std::declval<Iterator&>())>
+            EuclideanVector(Iterator begin, Iterator end) {
                 dims_ = std::distance(begin, end);
                 vals = new double[dims_];
                 unsigned int i = 0;
