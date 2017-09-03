@@ -41,7 +41,7 @@ namespace evec {
     // operations
 
     // copy assignment
-    EuclideanVector& EuclideanVector::operator=(EuclideanVector& e) {
+    EuclideanVector &EuclideanVector::operator=(EuclideanVector &e) {
         // copy and swap
         EuclideanVector tmp = e;
         swap(tmp, *this);
@@ -49,7 +49,7 @@ namespace evec {
     }
 
     // move assignment
-    EuclideanVector& EuclideanVector::operator=(EuclideanVector &&e) {
+    EuclideanVector &EuclideanVector::operator=(EuclideanVector &&e) {
         if (e == *this) {
             return *this;
         }
@@ -92,7 +92,7 @@ namespace evec {
         return vals[i];
     }
 
-    EuclideanVector& EuclideanVector::operator+=(const EuclideanVector &e) {
+    EuclideanVector &EuclideanVector::operator+=(const EuclideanVector &e) {
         if (dims_ != e.dims_) {
             throw std::invalid_argument("Dimensions do not match.");
         }
@@ -102,19 +102,19 @@ namespace evec {
         return *this;
     }
 
-    EuclideanVector& EuclideanVector::operator-=(const EuclideanVector &e) {
+    EuclideanVector &EuclideanVector::operator-=(const EuclideanVector &e) {
         *this += (e*-1);
         return *this;
     }
 
-    EuclideanVector& EuclideanVector::operator*=(const double &n) {
+    EuclideanVector &EuclideanVector::operator*=(const double &n) {
         for (unsigned int i = 0; i < dims_; ++i) {
             vals[i] *= n;
         }
         return *this;
     }
 
-    EuclideanVector& EuclideanVector::operator/=(const double &n) {
+    EuclideanVector &EuclideanVector::operator/=(const double &n) {
         *this *= (1/n);
         return *this;
     }
@@ -184,7 +184,7 @@ namespace evec {
         return e * (1/n);
     }
 
-    std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e) {
+    std::ostream &operator<<(std::ostream &stream, const EuclideanVector &e) {
         stream << '[';
         for (unsigned int i = 0; i < e.getNumDimensions(); ++i) {
             stream << e[i];
@@ -196,7 +196,7 @@ namespace evec {
         return stream;
     }
 
-    void swap(EuclideanVector& a, EuclideanVector& b) {
+    void swap(EuclideanVector &a, EuclideanVector &b) {
         using std::swap;
         swap(a.dims_, b.dims_);
         swap(a.vals, b.vals);

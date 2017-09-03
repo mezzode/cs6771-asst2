@@ -37,10 +37,10 @@ namespace evec {
             // operations
 
             // copy assignment
-            EuclideanVector& operator=(EuclideanVector &e);
+            EuclideanVector &operator=(EuclideanVector &e);
 
             // move assignment
-            EuclideanVector& operator=(EuclideanVector &&e);
+            EuclideanVector &operator=(EuclideanVector &&e);
 
             unsigned int getNumDimensions() const;
 
@@ -53,13 +53,13 @@ namespace evec {
             double &operator[](unsigned int i);
             const double &operator[](unsigned int i) const;
 
-            EuclideanVector& operator+=(const EuclideanVector &e);
+            EuclideanVector &operator+=(const EuclideanVector &e);
 
-            EuclideanVector& operator-=(const EuclideanVector &e);
+            EuclideanVector &operator-=(const EuclideanVector &e);
 
-            EuclideanVector& operator*=(const double &n);
+            EuclideanVector &operator*=(const double &n);
 
-            EuclideanVector& operator/=(const double &n);
+            EuclideanVector &operator/=(const double &n);
 
             operator std::vector<double>();
             operator std::list<double>();
@@ -68,7 +68,7 @@ namespace evec {
             double *vals;
             mutable double norm = -1;
 
-            friend void swap(EuclideanVector& a, EuclideanVector& b);
+            friend void swap(EuclideanVector &a, EuclideanVector &b);
     };
 
     bool operator==(const EuclideanVector &e1, const EuclideanVector &e2);
@@ -79,7 +79,7 @@ namespace evec {
     EuclideanVector operator*(const EuclideanVector &e, const double &n);
     EuclideanVector operator*(const double &n, const EuclideanVector &e);
     EuclideanVector operator/(const EuclideanVector &e, const double &n);
-    std::ostream& operator<<(std::ostream& stream, const EuclideanVector& e);
+    std::ostream &operator<<(std::ostream &stream, const EuclideanVector &e);
 }
 
 #endif
