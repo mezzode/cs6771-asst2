@@ -58,6 +58,13 @@ int main(int argc, char* argv[]) {
     evec::EuclideanVector v3(4, 4);
     test(v3);
 
+    evec::EuclideanVector v4{1, 2, 1, 2};
+    test(v4);
+    v4 = std::move(v4);
+    test(v4);
+    evec::EuclideanVector v5(std::move(v4));
+    test(v5);
+    test(v4);
     // correctly throws since cant convert from string to double
     // std::vector<std::string> v1 = {"moo", "moo"};
     // evec::EuclideanVector e1(v1.begin(), v1.end());

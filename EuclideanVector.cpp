@@ -54,6 +54,9 @@ namespace evec {
 
     // move assignment
     EuclideanVector& EuclideanVector::operator=(EuclideanVector &&e) {
+        if (e == *this) {
+            return *this;
+        }
         EuclideanVector tmp(0);
         swap(e, *this);
         swap(e, tmp);
